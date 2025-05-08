@@ -66,7 +66,7 @@ export const BookCard: React.FC<BookCardProps> = ({ book }) => {
 				<p className="text-gray-600 text-sm mb-2">{book.author}</p>
 				<div className="flex justify-between items-center mt-2">
 					<span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">
-						{book.genre.name}
+						{book.genreId}
 					</span>
 					<span className={`text-xs font-medium px-2 py-1 rounded ${statusColors[book.status]}`}>
 						{statusText[book.status]}
@@ -76,7 +76,7 @@ export const BookCard: React.FC<BookCardProps> = ({ book }) => {
 				{/* Extra info on hover */}
 				<div className={`transition-opacity duration-300 ease-in-out ${ hovered ? 'opacity-100 mt-4' : 'opacity-0 h-0 overflow-hidden'}`}>
 					<div className="text-xs text-gray-500">
-						<span className="font-semibold">Added by:</span> {book.user.username}
+						<span className="font-semibold">Added by:</span> {book.userId}
 					</div>
 					<div className="text-xs text-gray-400">
 						<span className="font-semibold">Created:</span> {new Date(book.createdAt).toLocaleDateString()}

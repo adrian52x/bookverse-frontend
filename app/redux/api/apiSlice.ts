@@ -1,20 +1,36 @@
-import { Book, Genre } from '@/types';
+import { Book, BookQueryParams, DbChangeResponse, Genre, User, UserAuthInput } from '@/types';
+import { current } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ 
         baseUrl: 'http://localhost:5000/api',
+        credentials: 'include',
         prepareHeaders: (headers) => {
             headers.set('Accept', 'application/json');
             return headers;
         },
     }),
-    tagTypes: ['Books', 'Genres'],
+    tagTypes: ['Books', 'Genres', 'Users'],
 
     endpoints: (builder) => ({
-        getBooks: builder.query<Book[], void>({
-            query: () => '/books',
+        getBooks: builder.query<Book[], BookQueryParams, void>({
+            query: (queryParams) => {
+                if (!queryParams) return '/books';
+
+                // URLSearchParams is used to safely construct the query string for filtering books.
+                const search = new URLSearchParams();
+                
+                // Append each query parameter to the search object if it exists.
+                if (queryParams.title) search.append('title', queryParams.title);
+                if (queryParams.genreId) search.append('genreId', queryParams.genreId);
+                if (queryParams.userId) search.append('userId', queryParams.userId);
+                const queryString = search.toString();
+
+                //return `/books${queryString ? `?${queryString}` : ''}`;
+                return `/books?${queryString}`;
+            },
             providesTags: ['Books'],
         }),
 
@@ -22,11 +38,6 @@ export const apiSlice = createApi({
             query: () => '/genres',
             providesTags: ['Genres'],
         }),
-
-        // getBooksByGenre: builder.query<Book[], string>({
-        //   query: (genreId) => `/books/genre/${genreId}`,
-        //   providesTags: ['Books'],
-        // }),
 
         addBook: builder.mutation<Book, Partial<Book>>({
             query: (book) => ({
@@ -53,13 +64,41 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['Books'],
         }),
+
+        // User-related endpoints
+        getUsers: builder.query<User[], void>({
+            query: () => '/users',
+            providesTags: ['Users'],
+        }),
+        authenticateUser: builder.mutation<User, UserAuthInput>({
+            query: (credentials) => ({
+                url: '/login',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
+        registerUser: builder.mutation<DbChangeResponse, UserAuthInput>({
+            query: (credentials) => ({
+                url: '/register',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
+        currentUser: builder.query<User, void>({
+            query: () => '/users/me',
+            providesTags: ['Users'],
+        }),
     }),
 });
 
 export const {
-  useGetBooksQuery,
-  useGetGenresQuery,
-  useAddBookMutation,
-  useUpdateBookMutation,
-  useDeleteBookMutation,
+    useGetBooksQuery,
+    useGetGenresQuery,
+    useAddBookMutation,
+    useUpdateBookMutation,
+    useDeleteBookMutation,
+    useGetUsersQuery,
+    useAuthenticateUserMutation,
+    useRegisterUserMutation,
+    useCurrentUserQuery,
 } = apiSlice; 
