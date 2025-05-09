@@ -34,8 +34,37 @@ export interface UserAuthInput {
 	password: string;
 }
 
+export interface LogoutResponse {
+	message: string;
+}
+
 // Drizzle ORM response type
 export interface DbChangeResponse {
 	changes: number;
 	lastInsertRowid?: number;
+}
+
+export interface ApiError {
+	status: number;
+	data: ApiErrorData;
+}
+
+// Error response can have either a string message or an array of validation errors
+export interface ApiErrorData {
+	message: string | ValidationError[];
+	url?: string;
+	method?: string;
+}
+
+export interface ValidationError {
+	type: string;
+	value: string;
+	msg: string;
+	path: string;
+	location: string;
+}
+
+export interface CustomNotification {
+	message: string;
+	type?: "success" | "error" | "info";
 }

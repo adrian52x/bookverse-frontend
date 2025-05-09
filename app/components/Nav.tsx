@@ -8,6 +8,7 @@ import { clearUser, openModal } from "../redux/slices/authSlice";
 import { useLogoutUserMutation } from "../redux/api/apiSlice";
 import { User } from "@/types";
 import { Button } from "./ui/Button";
+import { showNotification } from "../redux/slices/notificationSlice";
 
 export const Nav: React.FC = () => {
 	const currentUser = useSelector((state: RootState) => state.auth.user);
@@ -62,10 +63,18 @@ const LogoutButton: React.FC = () => {
 
 	const handleLogout = async () => {
 		try {
-			await logout().unwrap();
+			const response = await logout().unwrap();
 			dispatch(clearUser());
+			dispatch(
+				showNotification({ message: response.message, type: "info" }),
+			);
 		} catch (err) {
-			console.error("Logout error:", err);
+			dispatch(
+				showNotification({
+					message: "Somthing wrong...",
+					type: "error",
+				}),
+			);
 		}
 	};
 

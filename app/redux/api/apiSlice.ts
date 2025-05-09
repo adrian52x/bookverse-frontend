@@ -3,6 +3,7 @@ import {
 	BookQueryParams,
 	DbChangeResponse,
 	Genre,
+	LogoutResponse,
 	User,
 	UserAuthInput,
 } from "@/types";
@@ -96,7 +97,7 @@ export const apiSlice = createApi({
 			query: () => "/users/me",
 			providesTags: ["Users"],
 		}),
-		logoutUser: builder.mutation<void, void>({
+		logoutUser: builder.mutation<LogoutResponse, void>({
 			query: () => ({
 				url: "/logout",
 				method: "POST",

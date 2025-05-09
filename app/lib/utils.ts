@@ -1,11 +1,14 @@
+import { ApiErrorData } from "@/types";
+
 export function isVariableValid(variable: any) {
 	return variable !== null && variable !== undefined;
 }
 
-export function getCookie(name: string): string | null {
-	if (typeof document === "undefined") return null;
-	const match = document.cookie.match(
-		new RegExp("(^| )" + name + "=([^;]+)"),
-	);
-	return match ? decodeURIComponent(match[2]) : null;
+// Handle API error messages
+// Error response can have either a string message or an array of validation errors
+export function getErrorMessage(errorData: ApiErrorData): string {
+	if (Array.isArray(errorData.message)) {
+		return errorData.message.map((err) => err.msg).join(", ");
+	}
+	return errorData.message;
 }

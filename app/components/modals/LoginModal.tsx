@@ -4,6 +4,10 @@ import { RootState } from "@/app/redux/store";
 import { useAuthenticateUserMutation } from "@/app/redux/api/apiSlice";
 import { closeModal, setUser } from "@/app/redux/slices/authSlice";
 import { LoadingSpinner } from "../ui/LoadingSpinner";
+import { Button } from "../ui/Button";
+import { ApiError } from "@/types";
+import { getErrorMessage } from "@/app/lib/utils";
+import { showNotification } from "@/app/redux/slices/notificationSlice";
 
 export const LoginModal = () => {
 	const dispatch = useDispatch();
@@ -20,9 +24,19 @@ export const LoginModal = () => {
 			const user = await authenticate({ username, password }).unwrap();
 			dispatch(setUser(user));
 			dispatch(closeModal());
+			dispatch(
+				showNotification({
+					message: "Login successful!",
+					type: "success",
+				}),
+			);
 		} catch (err) {
-			// error handled by RTK Query
-			console.error("Login error:", err); // Log the error to the console
+			dispatch(
+				showNotification({
+					message: "Somthing wrong...",
+					type: "error",
+				}),
+			);
 		}
 	};
 
@@ -38,7 +52,6 @@ export const LoginModal = () => {
 						placeholder="Username"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
-						required
 					/>
 					<input
 						className="border px-2 py-1 rounded"
@@ -46,27 +59,26 @@ export const LoginModal = () => {
 						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
-						required
 					/>
+					{/* Error handling */}
 					{error && (
 						<div className="text-red-500 text-sm">
-							Login failed{" "}
+							{getErrorMessage((error as ApiError).data)}
 						</div>
 					)}
-					<button
+					<Button
 						type="submit"
-						className="bg-blue-600 text-white rounded px-4 py-2 mt-2"
+						variant="primary"
 						disabled={isLoading}
 					>
 						{isLoading ? <LoadingSpinner /> : "Login"}
-					</button>
-					<button
-						type="button"
-						className="text-gray-500 mt-2"
+					</Button>
+					<Button
+						variant="tertiary"
 						onClick={() => dispatch(closeModal())}
 					>
 						Cancel
-					</button>
+					</Button>
 				</form>
 			</div>
 		</div>

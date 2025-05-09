@@ -35,7 +35,6 @@ export const BookCard: React.FC<BookCardProps> = ({ book }) => {
 			className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
 			onMouseEnter={() => setHovered(true)}
 			onMouseLeave={() => setHovered(false)}
-			//style={{ height: IMAGE_HEIGHT + DETAILS_HEIGHT }} // fixed card height
 		>
 			{/* Image section */}
 			<div

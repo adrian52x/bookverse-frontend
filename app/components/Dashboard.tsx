@@ -76,6 +76,7 @@ export const Dashboard: React.FC = () => {
 				/>
 			</div>
 
+			{/* Render the books or a fallback */}
 			{isLoading ? (
 				<BookGridFallBack />
 			) : isError || !books ? (
