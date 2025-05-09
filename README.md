@@ -44,39 +44,43 @@ client/
 ### Must Have
 
 1. **TypeScript Integration**
-   - Strong typing for all components and Redux state
-   - Type-safe API interactions
-   - Interface definitions for all data models
+
+    - Strong typing for all components and Redux state
+    - Type-safe API interactions
+    - Interface definitions for all data models
 
 2. **Tailwind CSS Styling**
-   - Responsive design using Tailwind's utility classes
-   - Custom color scheme for status indicators
-   - Mobile-first approach
+
+    - Responsive design using Tailwind's utility classes
+    - Custom color scheme for status indicators
+    - Mobile-first approach
 
 3. **Redux Toolkit Implementation**
-   - Store configuration
-   - Book and genre slices
-   - Filtering logic in reducers
+
+    - Store configuration
+    - Book and genre slices
+    - Filtering logic in reducers
 
 4. **Responsive UI**
-   - 1 column on mobile devices (< 640px)
-   - 2 columns on small tablets (640px - 768px)
-   - 3 columns on large tablets (768px - 1024px)
-   - 4 columns on desktop (> 1024px)
+    - 1 column on mobile devices (< 640px)
+    - 2 columns on small tablets (640px - 768px)
+    - 3 columns on large tablets (768px - 1024px)
+    - 4 columns on desktop (> 1024px)
 
 ### Nice to Have
 
 1. **RTK Query Setup**
-   - API endpoint definitions
-   - Automated refetching
-   - Cache invalidation
-   - Loading and error states
+
+    - API endpoint definitions
+    - Automated refetching
+    - Cache invalidation
+    - Loading and error states
 
 2. **Error Management**
-   - Toast notifications for errors
-   - Fallback UI components
-   - Error boundaries
-   - Retry mechanisms
+    - Toast notifications for errors
+    - Fallback UI components
+    - Error boundaries
+    - Retry mechanisms
 
 ## Getting Started
 
@@ -88,17 +92,20 @@ client/
 ### Installation
 
 1. Clone the repository
+
 ```bash
 git clone git@github.com:io-m/bookverse-frontend.git
 cd client
 ```
 
 2. Install dependencies
+
 ```bash
 npm install
 ```
 
 3. Start the development server
+
 ```bash
 npm run dev
 ```
@@ -137,49 +144,51 @@ Redux/
 ## Code Sample - Book Card Component example -> feel free to go crazy with it
 
 ```tsx
-import React from 'react';
-import { Book } from '@/types';
+import React from "react";
+import { Book } from "@/types";
 
 interface BookCardProps {
-  book: Book;
+	book: Book;
 }
 
 const statusColors = {
-  to_read: 'bg-blue-100 text-blue-800',
-  in_progress: 'bg-yellow-100 text-yellow-800',
-  read: 'bg-green-100 text-green-800'
+	to_read: "bg-blue-100 text-blue-800",
+	in_progress: "bg-yellow-100 text-yellow-800",
+	read: "bg-green-100 text-green-800",
 };
 
 const statusText = {
-  to_read: 'To Read',
-  in_progress: 'Reading',
-  read: 'Read'
+	to_read: "To Read",
+	in_progress: "Reading",
+	read: "Read",
 };
 
 export const BookCard: React.FC<BookCardProps> = ({ book }) => {
-  return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="h-64 bg-gray-200 relative">
-        <img 
-          src={book.coverImage} 
-          alt={book.title} 
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <div className="p-4">
-        <h3 className="font-bold text-lg truncate">{book.title}</h3>
-        <p className="text-gray-600 text-sm mb-2">{book.author}</p>
-        <div className="flex justify-between items-center mt-2">
-          <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">
-            {book.genreName}
-          </span>
-          <span className={`text-xs font-medium px-2 py-1 rounded ${statusColors[book.status]}`}>
-            {statusText[book.status]}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+			<div className="h-64 bg-gray-200 relative">
+				<img
+					src={book.coverImage}
+					alt={book.title}
+					className="w-full h-full object-cover"
+				/>
+			</div>
+			<div className="p-4">
+				<h3 className="font-bold text-lg truncate">{book.title}</h3>
+				<p className="text-gray-600 text-sm mb-2">{book.author}</p>
+				<div className="flex justify-between items-center mt-2">
+					<span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">
+						{book.genreName}
+					</span>
+					<span
+						className={`text-xs font-medium px-2 py-1 rounded ${statusColors[book.status]}`}
+					>
+						{statusText[book.status]}
+					</span>
+				</div>
+			</div>
+		</div>
+	);
 };
 ```
 
@@ -190,9 +199,10 @@ This is a code challenge repository. To participate, please FORK this repository
 ## Next Steps
 
 1. **Add Redux Toolkit**:
-   ```bash
-   npm install @reduxjs/toolkit react-redux
-   ```
+
+    ```bash
+    npm install @reduxjs/toolkit react-redux
+    ```
 
 2. **Add RTK Query**:
    RTK Query is included with Redux Toolkit

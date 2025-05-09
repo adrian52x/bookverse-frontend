@@ -1,13 +1,14 @@
-
+import { Nav } from "../components/Nav";
 
 export default async function DashboardLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  return (
-    <>
-      <div className="container mx-auto px-8">{children}</div>
-    </>
-  );
+	return (
+		<>
+			<Nav />
+			<div className="container mx-auto px-8">{children}</div>
+		</>
+	);
 }
