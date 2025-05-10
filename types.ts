@@ -1,19 +1,17 @@
-export interface Genre {
-	id: number;
-	name: string;
-}
-
 export interface Book {
 	id: number;
 	title: string;
 	author: string;
-	// genre: Genre;
-	// user: User;
 	genreId: number;
 	userId: number;
 	coverImage?: string;
-	status: Status;
+	status: BookStatus;
 	createdAt: string;
+}
+
+export interface BookApiResponse extends Book {
+	genreName: string;
+	username: string;
 }
 
 export interface BookQueryParams {
@@ -22,8 +20,12 @@ export interface BookQueryParams {
 	userId?: string;
 }
 
-export type Status = "to_read" | "in_progress" | "read";
+export type BookStatus = "to_read" | "in_progress" | "read";
 
+export interface Genre {
+	id: number;
+	name: string;
+}
 export interface User {
 	id: number;
 	username: string;

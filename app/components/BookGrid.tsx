@@ -1,9 +1,9 @@
 "use client";
-import { Book } from "@/types";
+import { BookApiResponse } from "@/types";
 import { BookCard } from "./BookCard";
 
 interface BookGridProps {
-	books: Book[];
+	books: BookApiResponse[];
 }
 
 export const BookGrid: React.FC<BookGridProps> = ({ books }) => {

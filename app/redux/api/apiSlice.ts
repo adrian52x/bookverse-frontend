@@ -1,6 +1,7 @@
 import {
 	Book,
 	BookQueryParams,
+	BookApiResponse,
 	DbChangeResponse,
 	Genre,
 	LogoutResponse,
@@ -22,7 +23,7 @@ export const apiSlice = createApi({
 	tagTypes: ["Books", "Genres", "Users"],
 
 	endpoints: (builder) => ({
-		getBooks: builder.query<Book[], BookQueryParams, void>({
+		getBooks: builder.query<BookApiResponse[], BookQueryParams>({
 			query: (queryParams) => {
 				if (!queryParams) return "/books";
 
@@ -66,7 +67,7 @@ export const apiSlice = createApi({
 			invalidatesTags: ["Books"],
 		}),
 
-		deleteBook: builder.mutation<void, string>({
+		deleteBook: builder.mutation<DbChangeResponse, string>({
 			query: (id) => ({
 				url: `/books/${id}`,
 				method: "DELETE",

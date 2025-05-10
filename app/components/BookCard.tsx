@@ -1,11 +1,12 @@
 "use client";
 
-import { Book } from "@/types";
+import { BookApiResponse } from "@/types";
 import React, { useState } from "react";
 import { ImagePlaceholder } from "./ui/ImagePlaceholder";
+import { Button } from "./ui/Button";
 
 interface BookCardProps {
-	book: Book;
+	book: BookApiResponse;
 }
 
 const statusColors = {
@@ -65,7 +66,7 @@ export const BookCard: React.FC<BookCardProps> = ({ book }) => {
 				<p className="text-gray-600 text-sm mb-2">{book.author}</p>
 				<div className="flex justify-between items-center mt-2">
 					<span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">
-						{book.genreId}
+						{book.genreName}
 					</span>
 					<span
 						className={`text-xs font-medium px-2 py-1 rounded ${statusColors[book.status]}`}
@@ -74,17 +75,31 @@ export const BookCard: React.FC<BookCardProps> = ({ book }) => {
 					</span>
 				</div>
 
-				{/* Extra info on hover */}
+				<hr className={'my-4 h-px border-0 bg-neutral-200 dark:bg-neutral-800'}/>
+
+				{/* Extra info on hover -- Expand */}
 				<div
 					className={`transition-opacity duration-300 ease-in-out ${hovered ? "opacity-100 mt-4" : "opacity-0 h-0 overflow-hidden"}`}
 				>
-					<div className="text-xs text-gray-500">
-						<span className="font-semibold">Added by:</span>{" "}
-						{book.userId}
+					{/* User & Created At  */}
+					<div className="flex justify-between mb-2">
+						<div className="text-xs text-gray-500">
+							<span>Added by:</span>
+							<span className="ml-1 font-semibold">{book.username}</span>
+						</div>
+						<div className="text-xs text-gray-400">
+							<span className="font-semibold">{new Date(book.createdAt).toLocaleDateString()}</span>
+							
+						</div>
 					</div>
-					<div className="text-xs text-gray-400">
-						<span className="font-semibold">Created:</span>{" "}
-						{new Date(book.createdAt).toLocaleDateString()}
+					{/* Update & Delete button */}
+					<div className="grid grid-cols-2 gap-2">
+						<Button variant="tertiary">
+							Update
+						</Button>
+						<Button >
+							Delete
+						</Button>
 					</div>
 				</div>
 			</div>
